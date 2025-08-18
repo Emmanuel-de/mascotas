@@ -32,9 +32,20 @@ class PetController extends Controller
             'price' => 'required|numeric|min:0',
             'condition' => 'required|in:excellent,good,fair',
             'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        Pet::create($request->all());
+        $data = $request->all();
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->storeAs('public/pets', $imageName);
+            $data['image'] = 'pets/' . $imageName;
+        }
+
+        Pet::create($data);
 
         return redirect()->route('pets.index')
             ->with('success', 'Pet created successfully.');
@@ -60,9 +71,25 @@ class PetController extends Controller
             'condition' => 'required|in:excellent,good,fair',
             'description' => 'nullable|string',
             'available' => 'boolean',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $pet->update($request->all());
+        $data = $request->all();
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($pet->image && \Storage::exists('public/' . $pet->image)) {
+                \Storage::delete('public/' . $pet->image);
+            }
+            
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->storeAs('public/pets', $imageName);
+            $data['image'] = 'pets/' . $imageName;
+        }
+
+        $pet->update($data);
 
         return redirect()->route('pets.index')
             ->with('success', 'Pet updated successfully.');

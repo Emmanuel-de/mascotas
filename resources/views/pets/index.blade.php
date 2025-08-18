@@ -26,8 +26,8 @@
                         <!-- Search -->
                         <div>
                             <label for="search" class="block text-sm font-medium text-gray-700">Buscar</label>
-                            <input type="text" 
-                                   name="search" 
+                            <input type="text"
+                                   name="search"
                                    id="search"
                                    value="{{ request('search') }}"
                                    placeholder="Nombre o raza..."
@@ -80,6 +80,9 @@
                                 <thead class="bg-gray-50">
                                     <tr>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Imagen
+                                        </th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Información sobre mascotas
                                         </th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -103,18 +106,19 @@
                                     @foreach($pets as $pet)
                                         <tr class="hover:bg-gray-50">
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="flex items-center">
-                                                    <div class="flex-shrink-0 h-10 w-10">
-                                                        @if($pet->image)
-                                                            <img class="h-10 w-10 rounded-full object-cover" src="{{ asset('storage/' . $pet->image) }}" alt="{{ $pet->name }}">
-                                                        @else
-                                                            <div class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center">
-                                                                <svg class="h-6 w-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                                                                </svg>
-                                                            </div>
-                                                        @endif
+                                                @if($pet->image)
+                                                    <img src="{{ asset('storage/' . $pet->image) }}"
+                                                         alt="{{ $pet->name }}"
+                                                         class="h-16 w-16 object-cover rounded-lg"
+                                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                                @else
+                                                    <div class="h-16 w-16 bg-gray-200 rounded-lg flex items-center justify-center">
+                                                        <span class="text-gray-400 text-xs">Sin imagen</span>
                                                     </div>
+                                                @endif
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
                                                     <div class="ml-4">
                                                         <div class="text-sm font-medium text-gray-900">{{ $pet->name }}</div>
                                                         <div class="text-sm text-gray-500">ID: #{{ $pet->id }}</div>
@@ -154,7 +158,7 @@
                                                 <form action="{{ route('pets.destroy', $pet) }}" method="POST" class="inline">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" 
+                                                    <button type="submit"
                                                             class="text-red-600 hover:text-red-900"
                                                             onclick="return confirm('Are you sure you want to delete this pet?')">
                                                         Eliminar
