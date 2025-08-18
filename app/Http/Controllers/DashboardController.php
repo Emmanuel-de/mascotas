@@ -21,6 +21,7 @@ class DashboardController extends Controller
             ->latest()
             ->take(5)
             ->get();
+        $salesToday = Sale::whereDate('created_at', today())->count();
 
         return view('dashboard', compact(
             'totalProducts',
@@ -28,7 +29,8 @@ class DashboardController extends Controller
             'totalSales',
             'totalCustomers',
             'lowStockProducts',
-            'recentSales'
+            'recentSales',
+            'salesToday'
         ));
     }
 }

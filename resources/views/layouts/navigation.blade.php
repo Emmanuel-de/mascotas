@@ -15,6 +15,50 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    
+                    <!-- Products Dropdown -->
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                           Productos
+                            <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div x-show="open" @click.away="open = false" class="absolute z-10 mt-2 w-48 bg-white rounded-md shadow-lg">
+                            <a href="http://127.0.0.1:8000/products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Todos los productos</a>
+                            <a href="http://127.0.0.1:8000/products/create" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Agregar producto</a>
+                            <a href="http://127.0.0.1:8000/products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Categorías</a>
+                            <a href="http://127.0.0.1:8000/products" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Stock bajo</a>
+                        </div>
+                    </div>
+
+                    <x-nav-link href="http://127.0.0.1:8000/pets" :active="false">
+                        {{ __('Mascotas') }}
+                    </x-nav-link>
+                    
+                    <x-nav-link href="http://127.0.0.1:8000/sales" :active="false">
+                        {{ __('Ventas') }}
+                    </x-nav-link>
+                    
+                    <x-nav-link href="http://127.0.0.1:8000/customers" :active="false">
+                        {{ __('Clientes') }}
+                    </x-nav-link>
+                    
+                    <!-- Reports Dropdown -->
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                            Informes
+                            <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div x-show="open" @click.away="open = false" class="absolute z-10 mt-2 w-48 bg-white rounded-md shadow-lg">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Informe de ventas</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Informe de inventario</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Informe del cliente</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Informe de mascotas</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 

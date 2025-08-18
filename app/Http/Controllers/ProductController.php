@@ -8,9 +8,41 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with('category')->paginate(10);
+        $query = Product::with('category');
+
+        // Search functionality
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        // Category filter
+        if ($request->filled('category')) {
+            $query->where('category_id', $request->category);
+        }
+
+        // Stock filter
+        if ($request->filled('stock_filter')) {
+            switch ($request->stock_filter) {
+                case 'low':
+                    $query->where('stock', '<=', 10)->where('stock', '>', 0);
+                    break;
+                case 'out':
+                    $query->where('stock', 0);
+                    break;
+            }
+        }
+
+        $products = $query->orderBy('created_at', 'desc')->paginate(10);
+        
+        // Preserve query parameters in pagination links
+        $products->appends($request->query());
+
         return view('products.index', compact('products'));
     }
 
