@@ -12,6 +12,8 @@ class Sale extends Model
     protected $fillable = [
         'customer_id',
         'user_id',
+        'subtotal',
+        'tax',
         'total',
         'sale_date',
     ];

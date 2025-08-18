@@ -4,9 +4,22 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Gestión de ventas') }}
             </h2>
-            <a href="{{ route('sales.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Nueva venta
-            </a>
+            <div class="flex space-x-2">
+                @if(auth()->user()->role === 'administrator')
+                    <a href="{{ route('sales.report') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                        Generar informe de ventas
+                    </a>
+                @endif
+                @if(auth()->user()->role === 'customer')
+                    <a href="{{ route('sales.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Comprar
+                    </a>
+                @else
+                    <a href="{{ route('sales.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Nueva venta
+                    </a>
+                @endif
+            </div>
         </div>
     </x-slot>
 

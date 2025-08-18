@@ -43,6 +43,8 @@ Route::middleware('auth')->group(function () {
         ->middleware('role:administrator,employee')->name('sales.store');
     Route::get('/sales/{sale}', [App\Http\Controllers\SaleController::class, 'show'])
         ->middleware('role:administrator,employee,customer')->name('sales.show');
+    Route::get('/sales-report', [App\Http\Controllers\SaleController::class, 'generateSalesReport'])
+        ->middleware('role:administrator')->name('sales.report');
     Route::get('/sales/{sale}/edit', [App\Http\Controllers\SaleController::class, 'edit'])
         ->middleware('role:administrator,employee')->name('sales.edit');
     Route::put('/sales/{sale}', [App\Http\Controllers\SaleController::class, 'update'])

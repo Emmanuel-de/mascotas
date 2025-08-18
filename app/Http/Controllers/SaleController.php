@@ -9,6 +9,7 @@ use App\Models\Pet;
 use App\Models\SaleItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class SaleController extends Controller
 {
@@ -88,10 +89,16 @@ class SaleController extends Controller
                 $total += $subtotal;
             }
 
+            $subtotal = $total;
+            $tax = $subtotal * 0.16; // 16% tax
+            $finalTotal = $subtotal + $tax;
+
             $sale = Sale::create([
                 'customer_id' => $request->customer_id,
                 'user_id' => auth()->id(),
-                'total' => $total,
+                'subtotal' => $subtotal,
+                'tax' => $tax,
+                'total' => $finalTotal,
                 'sale_date' => now(),
             ]);
 
@@ -118,5 +125,45 @@ class SaleController extends Controller
 
         $sale->load(['customer', 'user', 'saleItems']);
         return view('sales.show', compact('sale'));
+    }
+
+    public function generateSalesReport()
+    {
+        // Only administrators can generate reports
+        if (auth()->user()->role !== 'administrator') {
+            abort(403, 'Unauthorized to generate sales reports.');
+        }
+
+        $sales = Sale::with(['customer', 'user', 'saleItems'])->get();
+        
+        // Calculate totals
+        $totalProductsProfit = 0;
+        $totalPetsSold = 0;
+        $totalProfit = $sales->sum('total');
+        
+        foreach ($sales as $sale) {
+            foreach ($sale->saleItems as $item) {
+                if ($item->item_type === 'product') {
+                    $totalProductsProfit += $item->subtotal;
+                } else {
+                    $totalPetsSold += $item->quantity;
+                }
+            }
+        }
+
+        $customers = $sales->pluck('customer')->unique('id');
+        
+        $data = [
+            'sales' => $sales,
+            'totalProductsProfit' => $totalProductsProfit,
+            'totalPetsSold' => $totalPetsSold,
+            'totalProfit' => $totalProfit,
+            'customers' => $customers,
+            'generatedAt' => now()
+        ];
+
+        $pdf = Pdf::loadView('sales.report', $data);
+        
+        return $pdf->download('sales-report-' . now()->format('Y-m-d') . '.pdf');
     }
 }
