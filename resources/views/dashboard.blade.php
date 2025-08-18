@@ -2,7 +2,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Inicio') }}
         </h2>
     </x-slot>
 
@@ -220,15 +220,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-6 pt-4 border-t">
-                            <h4 class="font-medium text-gray-900 mb-3">Informes rápidos</h4>
-                            <div class="space-y-2">
-                                <a href="#" class="block text-sm text-blue-600 hover:text-blue-800">📊 Informe de ventas</a>
-                                <a href="#" class="block text-sm text-blue-600 hover:text-blue-800">📦 Informe de inventario</a>
-                                <a href="#" class="block text-sm text-blue-600 hover:text-blue-800">🐕 Catálogo de mascotas</a>
-                                <a href="#" class="block text-sm text-blue-600 hover:text-blue-800">👥 Lista de clientes</a>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>

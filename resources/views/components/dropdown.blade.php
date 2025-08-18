@@ -25,10 +25,10 @@ $width = match ($width) {
             x-transition:leave="transition ease-in duration-75"
             x-transition:leave-start="opacity-100 scale-100"
             x-transition:leave-end="opacity-0 scale-95"
-            class="absolute z-50 mt-2 {{ $width }} rounded-md shadow-lg {{ $alignmentClasses }}"
+            class="absolute z-[9999] mt-2 {{ $width }} rounded-md shadow-lg {{ $alignmentClasses }}"
             style="display: none;"
             @click="open = false">
-        <div class="rounded-md ring-1 ring-black ring-opacity-5 {{ $contentClasses }}">
+        <div class="cyber-card rounded-md ring-1 ring-cyan-400 ring-opacity-50" style="background: var(--cyber-surface); border: 1px solid var(--cyber-border); box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);">
             {{ $content }}
         </div>
     </div>
