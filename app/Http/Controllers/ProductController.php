@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        // Middleware is applied via routes/web.php
+    }
+
     public function index(Request $request)
     {
         $query = Product::with('category');

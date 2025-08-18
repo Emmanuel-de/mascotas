@@ -4,10 +4,11 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('Gestión de productos') }}
             </h2>
-            <a href="{{ route('products.create') }}" 
-               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Agregar nuevo producto
-            </a>
+            @if(auth()->user()->role !== 'customer')
+                <a href="{{ route('products.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Agregar nuevo producto
+                </a>
+            @endif
         </div>
     </x-slot>
 
@@ -227,17 +228,19 @@
                                             <div class="flex space-x-2">
                                                 <a href="{{ route('products.show', $product) }}" 
                                                    class="text-blue-600 hover:text-blue-900">Vista</a>
-                                                <a href="{{ route('products.edit', $product) }}" 
-                                                   class="text-indigo-600 hover:text-indigo-900">Editar</a>
-                                                <form action="{{ route('products.destroy', $product) }}" 
-                                                      method="POST" 
-                                                      class="inline"
-                                                      onsubmit="return confirm('Are you sure you want to delete this product?')">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" 
-                                                            class="text-red-600 hover:text-red-900">Borrar</button>
-                                                </form>
+                                                @if(auth()->user()->role !== 'customer')
+                                                    <a href="{{ route('products.edit', $product) }}" 
+                                                       class="text-indigo-600 hover:text-indigo-900">Editar</a>
+                                                    <form action="{{ route('products.destroy', $product) }}" 
+                                                          method="POST" 
+                                                          class="inline"
+                                                          onsubmit="return confirm('Are you sure you want to delete this product?')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" 
+                                                                class="text-red-600 hover:text-red-900">Borrar</button>
+                                                    </form>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

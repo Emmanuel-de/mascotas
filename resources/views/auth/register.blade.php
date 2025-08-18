@@ -28,6 +28,24 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
+        <!-- Role -->
+        <div class="mt-4">
+            <x-input-label for="role" :value="__('Role')" />
+            <select id="role" name="role" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" required>
+                <option value="">{{ __('Select a role') }}</option>
+                <option value="administrator" {{ old('role') == 'administrator' ? 'selected' : '' }}>
+                    {{ __('Administrator') }} - Manage users, inventory, and reports
+                </option>
+                <option value="employee" {{ old('role') == 'employee' ? 'selected' : '' }}>
+                    {{ __('Employee') }} - Record sales, manage customers, update inventory
+                </option>
+                <option value="customer" {{ old('role') == 'customer' ? 'selected' : '' }}>
+                    {{ __('Customer') }} - View products and place orders
+                </option>
+            </select>
+            <x-input-error :messages="$errors->get('role')" class="mt-2" />
+        </div>
+
         <!-- Confirm Password -->
         <div class="mt-4">
             <x-input-label for="password_confirmation" :value="__('Confirm Password')" />

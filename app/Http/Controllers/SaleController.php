@@ -12,9 +12,27 @@ use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller
 {
+    public function __construct()
+    {
+        // Middleware is applied via routes/web.php
+    }
+
     public function index()
     {
-        $sales = Sale::with(['customer', 'user'])->paginate(10);
+        $user = auth()->user();
+
+        if ($user->role === 'customer') {
+            // Customers can only see sales where they are the customer
+            $sales = Sale::with(['customer', 'user'])
+                ->whereHas('customer', function($query) use ($user) {
+                    $query->where('email', $user->email);
+                })
+                ->paginate(10);
+        } else {
+            // Administrators and employees can see all sales
+            $sales = Sale::with(['customer', 'user'])->paginate(10);
+        }
+
         return view('sales.index', compact('sales'));
     }
 
@@ -88,6 +106,16 @@ class SaleController extends Controller
 
     public function show(Sale $sale)
     {
+        $user = auth()->user();
+
+        // If user is a customer, only allow viewing their own sales
+        if ($user->role === 'customer') {
+            $customerMatch = $sale->customer && $sale->customer->email === $user->email;
+            if (!$customerMatch) {
+                abort(403, 'Unauthorized to view this sale.');
+            }
+        }
+
         $sale->load(['customer', 'user', 'saleItems']);
         return view('sales.show', compact('sale'));
     }

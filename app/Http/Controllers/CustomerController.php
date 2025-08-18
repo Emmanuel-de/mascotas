@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
+    public function __construct()
+    {
+        // Middleware is applied via routes/web.php
+    }
+
     public function index()
     {
         $customers = Customer::paginate(10);

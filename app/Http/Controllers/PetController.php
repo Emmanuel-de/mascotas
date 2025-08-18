@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class PetController extends Controller
 {
+    public function __construct()
+    {
+        // Middleware is applied via routes/web.php
+    }
+
     public function index()
     {
         $pets = Pet::paginate(10);
