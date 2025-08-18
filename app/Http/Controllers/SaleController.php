@@ -39,7 +39,21 @@ class SaleController extends Controller
 
     public function create()
     {
-        $customers = Customer::all();
+        $user = auth()->user();
+        
+        if ($user->role === 'customer') {
+            // For customers, find their customer record
+            $customer = Customer::where('email', $user->email)->first();
+            if (!$customer) {
+                return redirect()->route('sales.index')
+                    ->with('error', 'Customer profile not found. Please contact support.');
+            }
+            $customers = collect([$customer]);
+        } else {
+            // For administrators and employees, show all customers
+            $customers = Customer::all();
+        }
+        
         $products = Product::where('stock', '>', 0)->get();
         $pets = Pet::where('available', true)->get();
         return view('sales.create', compact('customers', 'products', 'pets'));
@@ -47,6 +61,18 @@ class SaleController extends Controller
 
     public function store(Request $request)
     {
+        $user = auth()->user();
+        
+        // For customers, automatically set their customer_id
+        if ($user->role === 'customer') {
+            $customer = Customer::where('email', $user->email)->first();
+            if (!$customer) {
+                return redirect()->route('sales.index')
+                    ->with('error', 'Customer profile not found. Please contact support.');
+            }
+            $request->merge(['customer_id' => $customer->id]);
+        }
+        
         $request->validate([
             'customer_id' => 'required|exists:customers,id',
             'items' => 'required|array|min:1',

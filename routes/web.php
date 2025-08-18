@@ -38,9 +38,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/sales', [App\Http\Controllers\SaleController::class, 'index'])
         ->middleware('role:administrator,employee,customer')->name('sales.index');
     Route::get('/sales/create', [App\Http\Controllers\SaleController::class, 'create'])
-        ->middleware('role:administrator,employee')->name('sales.create');
+        ->middleware('role:administrator,employee,customer')->name('sales.create');
     Route::post('/sales', [App\Http\Controllers\SaleController::class, 'store'])
-        ->middleware('role:administrator,employee')->name('sales.store');
+        ->middleware('role:administrator,employee,customer')->name('sales.store');
     Route::get('/sales/{sale}', [App\Http\Controllers\SaleController::class, 'show'])
         ->middleware('role:administrator,employee,customer')->name('sales.show');
     Route::get('/sales-report', [App\Http\Controllers\SaleController::class, 'generateSalesReport'])
