@@ -2,11 +2,12 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Gestión de productos') }}
+                🛍️ {{ __('Gestión de productos') }}
             </h2>
             @if(auth()->user()->role !== 'customer')
-                <a href="{{ route('products.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Agregar nuevo producto
+                <a href="{{ route('products.create') }}" 
+                   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    ➕ Agregar nuevo producto
                 </a>
             @endif
         </div>
@@ -22,122 +23,112 @@
             @endif
 
             <!-- Search and Filter Section -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
-                <div class="p-6">
-                    <form method="GET" action="{{ route('products.index') }}" class="flex gap-4 items-end">
-                        <div class="flex-1">
-                            <label for="search" class="block text-sm font-medium text-gray-700">Buscar productos</label>
-                            <input type="text" name="search" id="search" 
-                                   value="{{ request('search') }}"
-                                   placeholder="Buscar por nombre o descripción..."
-                                   class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                        </div>
-                        <div class="w-48">
-                            <label for="category" class="block text-sm font-medium text-gray-700">Categoría</label>
-                            <select name="category" id="category" 
-                                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                                <option value="">Todas las categorías</option>
-                                @foreach(\App\Models\Category::all() as $category)
-                                    <option value="{{ $category->id }}" 
-                                            {{ request('category') == $category->id ? 'selected' : '' }}>
-                                        {{ $category->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="w-32">
-                            <label for="stock_filter" class="block text-sm font-medium text-gray-700">Existencias</label>
-                            <select name="stock_filter" id="stock_filter" 
-                                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                                <option value="">Todo</option>
-                                <option value="low" {{ request('stock_filter') == 'low' ? 'selected' : '' }}>Stock bajo</option>
-                                <option value="out" {{ request('stock_filter') == 'out' ? 'selected' : '' }}>Agotado</option>
-                            </select>
-                        </div>
-                        <div class="flex gap-2">
-                            <button type="submit" 
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                Filtrar
-                            </button>
-                            <a href="{{ route('products.index') }}" 
-                               class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                                Clear
-                            </a>
-                        </div>
-                    </form>
-                </div>
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6 p-6">
+                <form method="GET" action="{{ route('products.index') }}" class="flex gap-4 items-end">
+                    <div class="flex-1">
+                        <label for="search" class="block text-sm font-medium text-gray-700 mb-2">🔍 Buscar productos</label>
+                        <input type="text" name="search" id="search" 
+                               value="{{ request('search') }}"
+                               placeholder="Buscar por nombre o descripción..."
+                               class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div class="w-48">
+                        <label for="category" class="block text-sm font-medium text-gray-700 mb-2">📂 Categoría</label>
+                        <select name="category" id="category" 
+                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Todas las categorías</option>
+                            @foreach(\App\Models\Category::all() as $category)
+                                <option value="{{ $category->id }}" 
+                                        {{ request('category') == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="w-32">
+                        <label for="stock_filter" class="block text-sm font-medium text-gray-700 mb-2">📦 Existencias</label>
+                        <select name="stock_filter" id="stock_filter" 
+                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Todos</option>
+                            <option value="low">⚠️ Stock bajo</option>
+                            <option value="out">❌ Agotado</option>
+                        </select>
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="submit" 
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            🔍 Filtrar
+                        </button>
+                        <a href="{{ route('products.index') }}" 
+                           class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                            🧹 Clear
+                        </a>
+                    </div>
+                </form>
             </div>
 
             <!-- Statistics Cards -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0">
-                                <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-                                    </svg>
-                                </div>
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                                </svg>
                             </div>
-                            <div class="ml-4">
-                                <div class="text-2xl font-bold text-gray-900">{{ \App\Models\Product::count() }}</div>
-                                <div class="text-sm text-gray-500">Total de productos</div>
-                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <div class="text-2xl font-bold text-gray-900">{{ \App\Models\Product::count() }}</div>
+                            <div class="text-sm text-gray-500">📦 Total de productos</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0">
-                                <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                </div>
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
                             </div>
-                            <div class="ml-4">
-                                <div class="text-2xl font-bold text-gray-900">{{ \App\Models\Product::where('stock', '>', 10)->count() }}</div>
-                                <div class="text-sm text-gray-500">En stock</div>
-                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <div class="text-2xl font-bold text-gray-900">{{ \App\Models\Product::where('stock', '>', 10)->count() }}</div>
+                            <div class="text-sm text-gray-500">✅ En stock</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0">
-                                <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
-                                    </svg>
-                                </div>
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                                </svg>
                             </div>
-                            <div class="ml-4">
-                                <div class="text-2xl font-bold text-gray-900">{{ \App\Models\Product::where('stock', '<=', 10)->where('stock', '>', 0)->count() }}</div>
-                                <div class="text-sm text-gray-500">Stock bajo</div>
-                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <div class="text-2xl font-bold text-gray-900">{{ \App\Models\Product::where('stock', '<=', 10)->where('stock', '>', 0)->count() }}</div>
+                            <div class="text-sm text-gray-500">⚠️ Stock bajo</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0">
-                                <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                    </svg>
-                                </div>
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
                             </div>
-                            <div class="ml-4">
-                                <div class="text-2xl font-bold text-gray-900">{{ \App\Models\Product::where('stock', 0)->count() }}</div>
-                                <div class="text-sm text-gray-500">Agotado</div>
-                            </div>
+                        </div>
+                        <div class="ml-4">
+                            <div class="text-2xl font-bold text-gray-900">{{ \App\Models\Product::where('stock', 0)->count() }}</div>
+                            <div class="text-sm text-gray-500">❌ Agotado</div>
                         </div>
                     </div>
                 </div>
@@ -150,27 +141,13 @@
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Imagen
-                                    </th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Producto
-                                    </th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Categoría
-                                    </th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Precio
-                                    </th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Existencias
-                                    </th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Estado
-                                    </th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Comportamiento
-                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">🖼️ Imagen</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">🏷️ Producto</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">📂 Categoría</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">💰 Precio</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">📦 Existencias</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">📊 Estado</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">⚙️ Comportamiento</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -192,7 +169,7 @@
                                                     @endif
                                                 </div>
                                                 <div class="ml-4">
-                                                    <div class="text-sm font-medium text-gray-900">{{ $product->name }}</div>
+                                                    <div class="text-sm font-medium text-gray-900">🏷️ {{ $product->name }}</div>
                                                     @if($product->description)
                                                         <div class="text-sm text-gray-500">{{ Str::limit($product->description, 50) }}</div>
                                                     @endif
@@ -215,33 +192,35 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             @if($product->stock == 0)
                                                 <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
-                                                    Agotado
+                                                    ❌ Agotado
                                                 </span>
                                             @elseif($product->stock <= 10)
                                                 <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                                    Stock bajo
+                                                    ⚠️ Stock bajo
                                                 </span>
                                             @else
                                                 <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                                                    En stock
+                                                    ✅ En stock
                                                 </span>
                                             @endif
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             <div class="flex space-x-2">
                                                 <a href="{{ route('products.show', $product) }}" 
-                                                   class="text-blue-600 hover:text-blue-900">Vista</a>
+                                                   class="text-blue-600 hover:text-blue-900 mr-2">👁️ Vista</a>
                                                 @if(auth()->user()->role !== 'customer')
                                                     <a href="{{ route('products.edit', $product) }}" 
-                                                       class="text-indigo-600 hover:text-indigo-900">Editar</a>
+                                                       class="text-indigo-600 hover:text-indigo-900 mr-2">✏️ Editar</a>
                                                     <form action="{{ route('products.destroy', $product) }}" 
                                                           method="POST" 
-                                                          class="inline"
-                                                          onsubmit="return confirm('Are you sure you want to delete this product?')">
+                                                          class="inline">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" 
-                                                                class="text-red-600 hover:text-red-900">Borrar</button>
+                                                                class="text-red-600 hover:text-red-900"
+                                                                onclick="return confirm('¿Estás seguro?')">
+                                                            🗑️ Borrar
+                                                        </button>
                                                     </form>
                                                 @endif
                                             </div>
@@ -258,7 +237,7 @@
                                                 <p class="text-gray-500 mb-4">Comience agregando su primer producto al inventario.</p>
                                                 <a href="{{ route('products.create') }}" 
                                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                                    Agregar producto
+                                                    ➕ Agregar producto
                                                 </a>
                                             </div>
                                         </td>

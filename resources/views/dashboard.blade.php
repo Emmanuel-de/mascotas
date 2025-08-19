@@ -1,4 +1,3 @@
-
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -23,7 +22,7 @@
                             </div>
                             <div class="ml-4">
                                 <div class="text-2xl font-bold text-gray-900">{{ $totalProducts }}</div>
-                                <div class="text-sm text-gray-500">Productos totales</div>
+                                <div class="text-sm text-gray-500">📦 Productos totales</div>
                             </div>
                         </div>
                     </div>
@@ -42,7 +41,7 @@
                             </div>
                             <div class="ml-4">
                                 <div class="text-2xl font-bold text-gray-900">{{ $totalPets }}</div>
-                                <div class="text-sm text-gray-500">Mascotas disponibles</div>
+                                <div class="text-sm text-gray-500">🐾 Mascotas disponibles</div>
                             </div>
                         </div>
                     </div>
@@ -61,7 +60,7 @@
                             </div>
                             <div class="ml-4">
                                 <div class="text-2xl font-bold text-gray-900">{{ $totalSales }}</div>
-                                <div class="text-sm text-gray-500">Ventas totales</div>
+                                <div class="text-sm text-gray-500">💰 Ventas totales</div>
                             </div>
                         </div>
                     </div>
@@ -80,7 +79,7 @@
                             </div>
                             <div class="ml-4">
                                 <div class="text-2xl font-bold text-gray-900">{{ $totalCustomers }}</div>
-                                <div class="text-sm text-gray-500">Total de clientes</div>
+                                <div class="text-sm text-gray-500">👥 Total de clientes</div>
                             </div>
                         </div>
                     </div>
@@ -99,7 +98,7 @@
                             </div>
                             <div class="ml-4">
                                 <div class="text-2xl font-bold {{ $lowStockProducts > 0 ? 'text-red-600' : 'text-gray-900' }}">{{ $lowStockProducts }}</div>
-                                <div class="text-sm text-gray-500">Artículos con bajo stock</div>
+                                <div class="text-sm text-gray-500">⚠️ Artículos con bajo stock</div>
                             </div>
                         </div>
                     </div>
@@ -109,31 +108,31 @@
             <!-- Quick Actions -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-8">
                 <div class="p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Acciones rápidas</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">⚡ Acciones rápidas</h3>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <a href="http://127.0.0.1:8000/products/create" class="flex items-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition duration-150">
                             <svg class="w-6 h-6 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                             </svg>
-                            <span class="text-blue-800 font-medium">Agregar producto</span>
+                            <span class="text-blue-800 font-medium">📦 Agregar producto</span>
                         </a>
                         <a href="http://127.0.0.1:8000/pets/create" class="flex items-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition duration-150">
                             <svg class="w-6 h-6 text-green-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                             </svg>
-                            <span class="text-green-800 font-medium">Registrar mascota</span>
+                            <span class="text-green-800 font-medium">🐾 Registrar mascota</span>
                         </a>
                         <a href="http://127.0.0.1:8000/sales/create" class="flex items-center p-4 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition duration-150">
                             <svg class="w-6 h-6 text-yellow-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
                             </svg>
-                            <span class="text-yellow-800 font-medium">Nueva venta</span>
+                            <span class="text-yellow-800 font-medium">💰 Nueva venta</span>
                         </a>
                         <a href="http://127.0.0.1:8000/customers/create" class="flex items-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition duration-150">
                             <svg class="w-6 h-6 text-purple-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                             </svg>
-                            <span class="text-purple-800 font-medium">Agregar cliente</span>
+                            <span class="text-purple-800 font-medium">👤 Agregar cliente</span>
                         </a>
                     </div>
                 </div>
@@ -144,7 +143,7 @@
                 <!-- Recent Sales -->
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Ventas recientes</h3>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">🛒 Ventas recientes</h3>
                         @if($recentSales->count() > 0)
                             <div class="space-y-4">
                                 @foreach($recentSales as $sale)
@@ -179,13 +178,13 @@
                 <!-- System Overview -->
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Descripción general del sistema</h3>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">🖥️ Descripción general del sistema</h3>
                         <div class="space-y-4">
                             <!-- Inventory Status -->
                             <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                                 <div class="flex items-center">
                                     <div class="w-3 h-3 {{ $lowStockProducts > 0 ? 'bg-red-500' : 'bg-green-500' }} rounded-full mr-3"></div>
-                                    <span class="text-gray-700">Estado del inventario</span>
+                                    <span class="text-gray-700">📋 Estado del inventario</span>
                                 </div>
                                 <span class="text-sm {{ $lowStockProducts > 0 ? 'text-red-600' : 'text-green-600' }} font-medium">
                                     {{ $lowStockProducts > 0 ? $lowStockProducts . ' items low' : 'Todos los artículos en stock' }}
@@ -196,7 +195,7 @@
                             <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                                 <div class="flex items-center">
                                     <div class="w-3 h-3 bg-blue-500 rounded-full mr-3"></div>
-                                    <span class="text-gray-700">Ventas de hoy</span>
+                                    <span class="text-gray-700">📈 Ventas de hoy</span>
                                 </div>
                                 <span class="text-sm text-blue-600 font-medium">{{ $salesToday }} ventas</span>
                             </div>
@@ -205,7 +204,7 @@
                             <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                                 <div class="flex items-center">
                                     <div class="w-3 h-3 bg-purple-500 rounded-full mr-3"></div>
-                                    <span class="text-gray-700">Mascotas disponibles</span>
+                                    <span class="text-gray-700">🐕 Mascotas disponibles</span>
                                 </div>
                                 <span class="text-sm text-purple-600 font-medium">{{ $totalPets }} mascotas listas</span>
                             </div>
@@ -214,7 +213,7 @@
                             <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                                 <div class="flex items-center">
                                     <div class="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
-                                    <span class="text-gray-700">Base de clientes</span>
+                                    <span class="text-gray-700">👥 Base de clientes</span>
                                 </div>
                                 <span class="text-sm text-green-600 font-medium">{{ $totalCustomers }} Clientes</span>
                             </div>
@@ -235,7 +234,7 @@
                             </svg>
                         </div>
                         <div class="ml-3">
-                            <h3 class="text-lg font-medium text-blue-900">¡Bienvenido a su sistema de gestión de tienda de mascotas!</h3>
+                            <h3 class="text-lg font-medium text-blue-900">🎉 ¡Bienvenido a su sistema de gestión de tienda de mascotas!</h3>
                             <div class="mt-2 text-sm text-blue-700">
                                 <p>Empieza añadiendo tus primeros productos y mascotas al sistema. Esto es lo que puedes hacer:</p>
                                 <ul class="mt-2 list-disc list-inside space-y-1">
